@@ -2,10 +2,16 @@ package com.example.aycomev322;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.example.aycomev322.Home.FragmentHome;
+import com.example.aycomev322.Life.FragmentLife;
+import com.example.aycomev322.Me.FragmentMe;
+import com.example.aycomev322.Order.FragmentOrder;
 
 public class MainActivity extends AppCompatActivity implements
         android.view.View.OnClickListener{
@@ -16,6 +22,12 @@ public class MainActivity extends AppCompatActivity implements
     private int index;//tag编号
     private int currentTabIndex;// 当前fragment的index
 
+    //定义Fragment
+    private FragmentHome fragmentHome;
+    private FragmentOrder fragmentOrder;
+    private FragmentLife fragmentLife;
+    private FragmentMe fragmentMe;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,6 +37,13 @@ public class MainActivity extends AppCompatActivity implements
 
     //初始化函数
     private void initView() {
+
+        fragmentHome = new FragmentHome();
+        fragmentOrder = new FragmentOrder();
+        fragmentLife = new FragmentLife();
+        fragmentMe = new FragmentMe();
+        fragments = new Fragment[] { fragmentHome, fragmentOrder,
+                fragmentLife, fragmentMe };
 
         imagebuttons = new ImageView[4];
         imagebuttons[0] = (ImageView) findViewById(R.id.im_home);
@@ -40,6 +59,13 @@ public class MainActivity extends AppCompatActivity implements
         textviews[3] = (TextView) findViewById(R.id.te_me);
         textviews[0].setTextColor(0xFF45C01A);
         // 添加显示第一个fragment
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.fragment_container, fragmentHome)
+                .add(R.id.fragment_container, fragmentOrder)
+                .add(R.id.fragment_container, fragmentLife)
+                .add(R.id.fragment_container, fragmentMe)
+                .hide(fragmentOrder).hide(fragmentLife)
+                .hide(fragmentMe).show(fragmentHome).commit();
     }
 
 
@@ -62,14 +88,14 @@ public class MainActivity extends AppCompatActivity implements
 
         }
 
-//        if (currentTabIndex != index) {
-//            FragmentTransaction trx = getSupportFragmentManager().beginTransaction();
-//            trx.hide(fragments[currentTabIndex]);
-//            if (!fragments[index].isAdded()) {
-//                trx.add(R.id.fragment_container, fragments[index]);
-//            }
-//            trx.show(fragments[index]).commit();
-//        }
+        if (currentTabIndex != index) {
+            FragmentTransaction trx = getSupportFragmentManager().beginTransaction();
+            trx.hide(fragments[currentTabIndex]);
+            if (!fragments[index].isAdded()) {
+                trx.add(R.id.fragment_container, fragments[index]);
+            }
+            trx.show(fragments[index]).commit();
+        }
         imagebuttons[currentTabIndex].setSelected(false);
         // 把当前tab设为选中状态
         imagebuttons[index].setSelected(true);
