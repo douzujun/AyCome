@@ -9,6 +9,17 @@
         android:layout_height="190dp"
         android:background="@drawable/my_background">
 
+        <TextView
+            android:id="@+id/icon_phone_setting"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:paddingRight="20dp"
+            android:gravity="right"
+            android:text="设置"
+            android:textSize="16dp"
+            android:textColor="#FFF"/>
+
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/icon_head_image"
             android:layout_width="70dp"
@@ -22,7 +33,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:gravity="center_horizontal"
-            android:text="18306290897"
+            android:text=""
             android:textColor="#FFF"
             android:textSize="16sp"/>
 
@@ -32,11 +43,16 @@
             android:layout_height="wrap_content"
             android:layout_above="@id/my_phone"
             android:gravity="center_horizontal"
-            android:text="Tony Green"
+            android:text="注册/登陆"
             android:textColor="#FFF"
             android:textSize="15sp"/>
 
     </RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
 
+
+    </LinearLayout>
 </RelativeLayout>

@@ -2,7 +2,7 @@
 <resources>
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorAccent">#377149</color>
     <!---自定义-->
     <color name="common_top_bar_blue">#22292c</color><!--标题栏背景色-->
 </resources>
