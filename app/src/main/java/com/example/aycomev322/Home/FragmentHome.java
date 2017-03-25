@@ -1,6 +1,7 @@
 package com.example.aycomev322.Home;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -13,6 +14,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.aycomev322.R;
+import com.example.aycomev322.RegionSelectActivity;
+import com.example.aycomev322.region_DB.DBCopyUtil;
 
 import java.util.ArrayList;
 
@@ -20,8 +23,10 @@ import java.util.ArrayList;
  * Created by quan on 2017/3/22.
  */
 
-public class FragmentHome extends Fragment implements ViewPager.OnPageChangeListener{
+public class FragmentHome extends Fragment implements ViewPager.OnPageChangeListener,View.OnClickListener{
+    private static final int REGION_REQUEST_CODE = 001;
 
+    private TextView tv_result;//保存得到的地区
     private LinearLayout linearLayout;//存放小白点
     private ViewPager viewPager;//获取viewPager
     private TextView textView;//获取文本描述的TextView
@@ -40,6 +45,9 @@ public class FragmentHome extends Fragment implements ViewPager.OnPageChangeList
         textView = (TextView)view.findViewById(R.id.home_image_desc);
         viewPager.setOnPageChangeListener((ViewPager.OnPageChangeListener) this);
         linearLayout = (LinearLayout) view.findViewById(R.id.home_point_container);
+        //初始化地图选择器
+        tv_result = (TextView) view.findViewById(R.id.region_text);
+        view.findViewById(R.id.region_select).setOnClickListener(this);
         //初始化数据
         initData();
         //初始化适配器
@@ -143,5 +151,27 @@ public class FragmentHome extends Fragment implements ViewPager.OnPageChangeList
     @Override
     public void onPageScrollStateChanged(int state) {
         //滚动状态变化时调用
+    }
+
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.region_select:
+                DBCopyUtil.copyDataBaseFromAssets(getContext(), "region.db");
+                startActivityForResult(new Intent(getContext(), RegionSelectActivity.class), REGION_REQUEST_CODE);
+                break;
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REGION_REQUEST_CODE && resultCode == 200) {
+            String province = data.getStringExtra(RegionSelectActivity.REGION_PROVINCE);
+            String city = data.getStringExtra(RegionSelectActivity.REGION_CITY);
+            String area = data.getStringExtra(RegionSelectActivity.REGION_AREA);
+
+            tv_result.setText(city);
+        }
     }
 }
