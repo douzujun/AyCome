@@ -40,7 +40,7 @@
                         android:id="@+id/region_select"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
-                        android:background="@drawable/region_select1"
+                        android:background="@drawable/region_select2"
                         android:textColor="#050505"/>
                     <TextView
                         android:id="@+id/region_text"
